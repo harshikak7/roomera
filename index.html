@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><title>Roomera – Smart Roommate Finder</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#FAF7F2;--card:#fff;--ink:#1F1B16;--mute:#6F6A60;--y:#FFC629;--yd:#E6AE0A;--line:#E8E2D6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{line-height:1.1;margin:0;letter-spacing:-.02em;font-weight:700}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font-weight:700;font-size:22px;letter-spacing:-.03em}.logo i{color:var(--y);font-style:normal}
+.btn{background:var(--y);color:var(--ink);border:0;border-radius:99px;padding:15px 30px;font:600 16px Inter,Helvetica,Arial,sans-serif;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 2px 0 var(--yd)}
+.btn:hover{box-shadow:0 4px 0 var(--yd);transform:translateY(-1px)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.ghost{background:transparent;border:1.5px solid var(--ink);box-shadow:none;padding:11px 22px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:56px 0 72px}
+@media(max-width:760px){.hero{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(44px,8vw,84px);font-weight:800;letter-spacing:-.04em}
+.hero p{color:var(--mute);font-size:19px;max-width:440px;margin:20px 0 32px}
+.stack{position:relative;height:380px;max-width:300px;margin:0 auto;width:100%}
+.mc{position:absolute;inset:0;border-radius:28px;background:var(--card);border:1px solid var(--line);overflow:hidden;box-shadow:0 24px 40px -24px #0003}
+.mc:nth-child(1){transform:rotate(-7deg) translateX(-26px);opacity:.6}
+.mc:nth-child(2){transform:rotate(5deg) translateX(22px);opacity:.85}
+.ph{height:72%;display:grid;place-items:center;font-size:110px;font-weight:700;color:#1F1B1633}
+.tx{padding:14px 18px}.tx b{font-size:20px}.tx span{display:block;color:var(--mute);font-size:14px}
+.sec{padding:56px 0;border-top:1px solid var(--line)}
+.sec h2{font-size:clamp(28px,4vw,40px);margin-bottom:28px}
+.rows>div{display:grid;grid-template-columns:64px 1fr 1.4fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.rows>div:last-child{border-bottom:0}
+.rows b{color:var(--mute);font-weight:500}.rows h3{font-size:20px}.rows p{margin:0;color:var(--mute)}
+@media(max-width:700px){.rows>div{grid-template-columns:36px 1fr}.rows p{grid-column:2}}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px}
+.step span{font-size:56px;font-weight:800;color:var(--y);letter-spacing:-.04em;display:block;line-height:1}
+.step b{display:block;margin-top:8px}
+.aff{display:flex;align-items:center;gap:18px;padding:26px;border-radius:24px;background:var(--card);border:1px solid var(--line)}
+.seal{width:52px;height:52px;border-radius:50%;background:var(--y);display:grid;place-items:center;font-weight:800;flex:none}
+footer{color:var(--mute);padding:28px 0;font-size:14px;border-top:1px solid var(--line)}
+.panel{max-width:440px;margin:0 auto;padding:20px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:24px}
+label{font-weight:600;font-size:14px;display:block;margin:16px 0 6px}
+input,textarea{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:16px Inter,Helvetica,Arial,sans-serif}
+input:focus,textarea:focus{outline:0;border-color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 14px;border-radius:99px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font:500 14px Inter,Helvetica,Arial,sans-serif}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.avs{display:flex;gap:10px;flex-wrap:wrap}.av{width:44px;height:44px;border-radius:50%;border:3px solid var(--card);box-shadow:0 0 0 1.5px var(--line);cursor:pointer}
+.av.on{box-shadow:0 0 0 2px var(--ink)}
+.mono{display:grid;place-items:center;font-weight:700;border-radius:50%;color:#1F1B1699;border:3px solid var(--bg)}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-bottom:24px}.bar div{height:100%;background:var(--y);border-radius:9px;transition:width .3s}
+.opt{display:block;width:100%;text-align:left;margin:12px 0;padding:20px;border-radius:20px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:600 18px Inter,Helvetica,Arial,sans-serif;cursor:pointer;transition:.12s}
+.opt:hover,.opt.sel{border-color:var(--ink);background:var(--y)}
+.deck{position:relative;height:min(520px,68vh);margin:12px 0;touch-action:none}
+.pc{position:absolute;inset:0;border-radius:28px;overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:0 24px 40px -24px #0003;cursor:grab;user-select:none;display:flex;flex-direction:column}
+.pc .pic{flex:1;display:grid;place-items:center;font-size:150px;font-weight:700;color:#1F1B1633;position:relative}
+.pc .info{padding:16px 20px;background:var(--card)}
+.pc h2{font-size:24px}.pc small{color:var(--mute)}
+.score{position:absolute;top:14px;right:14px;background:var(--card);color:var(--ink);font:600 13px Inter,Helvetica,Arial,sans-serif;border-radius:99px;padding:6px 12px}
+.stamp{position:absolute;top:20px;font-weight:800;font-size:26px;border:3px solid;border-radius:10px;padding:2px 12px;background:#fffc}
+.acts{display:flex;justify-content:center;gap:24px;margin:16px 0}
+.round{width:64px;height:64px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);font-size:24px;cursor:pointer;transition:transform .12s}
+.round:hover{transform:scale(1.06)}.round.yes{background:var(--y);border-color:var(--y)}
+.modal{position:fixed;inset:0;background:#1f1b1655;display:grid;place-items:center;padding:16px;z-index:9}
+.sheet{background:var(--bg);border-radius:28px;max-width:420px;width:100%;max-height:88vh;overflow:auto;padding:28px;text-align:center}
+.pair{display:flex;justify-content:center;margin:16px 0}.pair .mono+.mono{margin-left:-18px}
+.chat{height:240px;overflow:auto;text-align:left;display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.m{padding:10px 14px;border-radius:18px;max-width:80%;background:var(--card);border:1px solid var(--line)}
+.m.me{align-self:flex-end;background:var(--y);border-color:var(--y)}
+.row{display:flex;gap:8px}.row input{flex:1}
+</style></head>
+<body><div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<script type="text/babel">
+const {useState,useRef,useEffect}=React;
+const Q=[
+["Early bird or night owl?","Early bird","Night owl"],
+["Would you rather a spotless room or a lived-in vibe?","Spotless","Lived-in"],
+["Friday night: party or pyjamas?","Party","Pyjamas"],
+["Study mode: total silence or lo-fi playlist?","Silence","Lo-fi"],
+["Would you rather share snacks or label your food?","Share all","Label it"],
+["Guests over: anytime or ask first?","Anytime","Ask first"]];
+const USERS=[
+{n:"Aarav",a:20,c:"B.Tech CSE · Year 2",e:"🧑🏽‍💻",b:"Chai-powered coder. Quiet by day, chatty by midnight.",t:["Gaming","Chai","Hackathons"],ans:[1,0,1,0,0,1],like:true},
+{n:"Meera",a:19,c:"BBA · Year 1",e:"👩🏽‍🎨",b:"Sketchbook always open. Will absolutely decorate our room.",t:["Art","Thrifting","Indie music"],ans:[0,0,1,1,0,1],like:true},
+{n:"Kabir",a:21,c:"B.Des · Year 3",e:"🧔🏽",b:"Gym at 6am, sleep at 10pm. Tidy but chill.",t:["Gym","Cooking","Cricket"],ans:[0,0,0,0,0,0],like:true},
+{n:"Sana",a:20,c:"B.Com · Year 2",e:"👩🏻‍🎓",b:"Bookworm with a secret karaoke addiction.",t:["Books","Karaoke","Baking"],ans:[0,0,0,0,0,1],like:true},
+{n:"Rohan",a:22,c:"MBA · Year 1",e:"🧑🏾",b:"Weekend traveller. Always down for a late-night maggi.",t:["Travel","Football","Maggi"],ans:[1,1,1,1,0,0],like:false},
+{n:"Isha",a:19,c:"B.Sc Psych · Year 1",e:"👩🏽",b:"Plant parent of 7. Looking for a calm, kind roomie.",t:["Plants","Yoga","Journaling"],ans:[0,0,0,0,0,1],like:true},
+{n:"Dev",a:21,c:"B.Tech ECE · Year 3",e:"🧑🏼",b:"Headphones on, world off. Pizza fixes everything.",t:["Music","Pizza","Anime"],ans:[1,1,0,1,1,0],like:true},
+{n:"Tara",a:20,c:"BA Eng · Year 2",e:"👩🏾‍🦱",b:"Spontaneous plans, shared playlists, zero drama.",t:["Dance","Movies","Poetry"],ans:[0,1,1,1,0,0],like:false}];
+const TONES=["#F4E4B8","#EBD9CB","#DCE5D3","#E7D2D0","#D8E2EA","#EADFC9"];
+USERS.forEach((u,k)=>{u.tone=TONES[k%6];u.g="MFMFMFMF"[k]==="M"?"Male":"Female"});
+const Mono=({u,s=48})=><div className="mono" style={{width:s,height:s,fontSize:s*.42,background:u.tone}}>{u.n?u.n[0].toUpperCase():"?"}</div>;
+
+// Compatibility: share of matching answers (mirrors backend/app.py)
+const score=(mine,u)=>Math.round(100*mine.filter((v,i)=>v===u.ans[i]).length/Q.length);
+
+function Home({go}){
+const why=[["Matching on habits","Six would-you-rather questions turn your sleep, study and social style into a compatibility score."],["Only your campus","Every profile belongs to a student at your institution. No strangers."],["Chat on a mutual yes","When you both swipe right, a chat opens. Nothing before that."]];
+return(<div className="wrap">
+<nav><span className="logo">roomera<i>.</i></span><button className="btn ghost" onClick={()=>go("login")}>Log in</button></nav>
+<section className="hero"><div><h1>Find a Roomie?</h1><p>Swipe through students who share your routine, not just your hostel block.</p><button className="btn" onClick={()=>go("login")}>Find a Roomie</button></div>
+<div className="stack">{[3,1,0].map(k=>{const u=USERS[k];return(<div className="mc" key={k}><div className="ph" style={{background:u.tone}}>{u.n[0]}</div><div className="tx"><b>{u.n}, {u.a}</b><span>{u.c}</span></div></div>)})}</div></section>
+<section className="sec"><h2>Why Roomera</h2><div className="rows">{why.map((w,i)=><div key={i}><b>0{i+1}</b><h3>{w[0]}</h3><p>{w[1]}</p></div>)}</div></section>
+<section className="sec"><h2>How it works</h2><div className="steps">{["Build your card","Answer six questions","Swipe through matches","Chat with your match"].map((t,i)=><div className="step" key={t}><span>{i+1}</span><b>{t}</b></div>)}</div></section>
+<section className="sec"><div className="aff"><div className="seal">M</div><div><h3>In pilot at MLDC</h3><p style={{margin:"4px 0 0",color:"var(--mute)"}}>Open to MLDC students only, with a college email.</p></div></div></section>
+<footer>© 2026 Roomera · Demo project</footer></div>)}
+
+function Login({go}){return(<div className="panel"><div style={{textAlign:"center",margin:"30px 0"}}><div className="logo" style={{fontSize:30}}>roomera<i>.</i></div><p style={{color:"var(--mute)"}}>Welcome back! Log in with your college email.</p></div>
+<div className="box"><label>College email</label><input placeholder="you@mldc.edu"/><label>Password</label><input type="password" placeholder="••••••••"/>
+<button className="btn" style={{width:"100%",marginTop:22}} onClick={()=>go("profile")}>Log in</button>
+<p style={{textAlign:"center",color:"var(--mute)",fontSize:13}}>Demo: any click works</p></div></div>)}
+
+function Profile({me,setMe,go}){
+const TG=["Music","Gaming","Gym","Books","Cooking","Travel","Movies","Art","Anime","Cricket"];
+const set=(k,v)=>setMe({...me,[k]:v});
+const tog=t=>set("t",me.t.includes(t)?me.t.filter(x=>x!==t):me.t.length<4?[...me.t,t]:me.t);
+const ok=me.n&&me.c&&me.g;
+return(<div className="panel"><h2 style={{margin:"10px 0 4px"}}>Build your card</h2><p style={{color:"var(--mute)",marginTop:0}}>This is what others see when you show up in their deck.</p>
+<div className="box"><label>Card colour</label><div className="avs">{TONES.map(c=><button key={c} aria-label="colour" className={"av"+(me.tone===c?" on":"")} style={{background:c}} onClick={()=>set("tone",c)}/>)}</div>
+<label>I am</label><div className="chips">{["Male","Female","Other"].map(g=><button key={g} className={"chip"+(me.g===g?" on":"")} onClick={()=>set("g",g)}>{g}</button>)}</div><p style={{fontSize:13,color:"var(--mute)",margin:"6px 0 0"}}>You will only be shown roommates of the same gender. Choose Other to see everyone.</p><label>First name</label><input value={me.n} onChange={e=>set("n",e.target.value)} placeholder="e.g. Riya"/>
+<label>Age</label><input type="number" value={me.a} onChange={e=>set("a",e.target.value)}/>
+<label>Course & year</label><input value={me.c} onChange={e=>set("c",e.target.value)} placeholder="BBA · Year 2"/>
+<label>One-liner about you</label><textarea rows="2" value={me.b} onChange={e=>set("b",e.target.value)} placeholder="Chaotic good, loves chai..."/>
+<label>Pick up to 4 interests</label><div className="chips">{TG.map(t=><button key={t} className={"chip"+(me.t.includes(t)?" on":"")} onClick={()=>tog(t)}>{t}</button>)}</div>
+<button className="btn" disabled={!ok} style={{width:"100%",marginTop:22}} onClick={()=>go("quiz")}>Continue →</button></div></div>)}
+
+function Quiz({setAns,go}){
+const [i,setI]=useState(0),[a,setA]=useState([]),[sel,setSel]=useState(null);
+const pick=v=>{setSel(v);setTimeout(()=>{const n=[...a,v];setSel(null);if(i+1===Q.length){setAns(n);go("swipe")}else{setA(n);setI(i+1)}},250)};
+return(<div className="panel"><div className="bar"><div style={{width:(i/Q.length*100)+"%"}}/></div>
+<p style={{color:"var(--mute)",fontWeight:700,margin:0}}>QUESTION {i+1} OF {Q.length}</p>
+<h2 style={{margin:"8px 0 18px",fontSize:26}}>{Q[i][0]}</h2>
+{[1,2].map((k,v)=><button key={k} className={"opt"+(sel===v?" sel":"")} onClick={()=>pick(v)}>{Q[i][k]}</button>)}</div>)}
+
+function Swipe({me,ans}){
+const local=USERS.map((u,k)=>({...u,id:k+1,s:score(ans,u)})).filter(u=>me.g==="Other"||u.g===me.g).sort((x,y)=>y.s-x.s);
+const [list,setList]=useState(local);
+// Ask the Python backend for scores; fall back to local scoring if it isn't running
+useEffect(()=>{fetch("/api/recommendations",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({answers:ans})}).then(r=>r.json()).then(d=>{const m=Object.fromEntries(d.map(x=>[x.id,x.score]));setList(local.map(u=>({...u,s:m[u.id]??u.s})).sort((x,y)=>y.s-x.s))}).catch(()=>{})},[]);
+const [i,setI]=useState(0),[dx,setDx]=useState(0),[open,setOpen]=useState(null),[match,setMatch]=useState(null);
+const st=useRef(null);const u=list[i];
+const decide=r=>{if(r&&u.like)setMatch(u);setDx(0);setI(i+1)};
+const down=e=>{st.current=e.clientX;e.currentTarget.setPointerCapture(e.pointerId)};
+const move=e=>{if(st.current!=null)setDx(e.clientX-st.current)};
+const up=()=>{if(st.current==null)return;const d=dx;st.current=null;if(d>100)decide(true);else if(d<-100)decide(false);else{setDx(0);if(Math.abs(d)<5)setOpen(u)}};
+return(<div className="panel"><div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><span className="logo">roomera<i>.</i></span><span style={{color:"var(--mute)"}}>Hi, {me.n}!</span></div>
+{u?<>
+<div className="deck"><div className="pc" onPointerDown={down} onPointerMove={move} onPointerUp={up} style={{transform:`translateX(${dx}px) rotate(${dx/20}deg)`,transition:st.current==null?".25s":"none"}}>
+<div className="pic" style={{background:u.tone}}>{u.n[0]}<span className="score">{u.s}% match</span>
+{dx>40&&<span className="stamp" style={{left:20,color:"#2e9e4f"}}>YES</span>}{dx<-40&&<span className="stamp" style={{right:20,color:"#d64545"}}>PASS</span>}</div>
+<div className="info"><h2>{u.n}, {u.a}</h2><small>{u.c}</small><div className="chips" style={{marginTop:8}}>{u.t.map(t=><span key={t} className="chip">{t}</span>)}</div></div></div></div>
+<div className="acts"><button className="round" aria-label="No" onClick={()=>decide(false)}>✕</button><button className="round yes" aria-label="Yes" onClick={()=>decide(true)}>✓</button></div>
+<p style={{textAlign:"center",color:"var(--mute)",fontSize:13}}>Swipe or tap buttons · tap card for full profile</p></>
+:<div className="box" style={{textAlign:"center",marginTop:40}}><h2>You're all caught up</h2><p style={{color:"var(--mute)"}}>New students join daily.</p><button className="btn" onClick={()=>setI(0)}>Start over</button></div>}
+{open&&<div className="modal" onClick={()=>setOpen(null)}><div className="sheet" onClick={e=>e.stopPropagation()}><div style={{display:"flex",justifyContent:"center",marginBottom:8}}><Mono u={open} s={96}/></div><h2>{open.n}, {open.a}</h2><small style={{color:"var(--mute)"}}>{open.c} · MLDC</small><p>{open.b}</p>
+<div className="chips" style={{justifyContent:"center"}}>{open.t.map(t=><span key={t} className="chip on">{t}</span>)}</div>
+<h3 style={{margin:"18px 0 8px"}}>{open.s}% compatible</h3>
+{Q.map((q,k)=><p key={k} style={{margin:"4px 0",fontSize:14}}>{ans[k]===open.ans[k]?"✓":"–"} {q[open.ans[k]+1]}</p>)}
+<button className="btn" style={{marginTop:16}} onClick={()=>setOpen(null)}>Close</button></div></div>}
+{match&&<Match u={match} me={me} close={()=>setMatch(null)}/>}</div>)}
+
+function Match({u,me,close}){
+const [chat,setChat]=useState(false),[msgs,setMsgs]=useState([{t:`Hi ${me.n}, looks like we would make good roommates.`}]),[txt,setTxt]=useState("");
+const send=()=>{if(!txt.trim())return;setMsgs(m=>[...m,{t:txt,me:1}]);setTxt("");setTimeout(()=>setMsgs(m=>[...m,{t:"Haha love that! Coffee at the canteen tomorrow? "}]),900)};
+return(<div className="modal"><div className="sheet">
+{!chat?<><h2 style={{fontSize:30}}>You can be roomies</h2><div className="pair"><Mono u={me} s={84}/><Mono u={u} s={84}/></div><p>You and <b>{u.n}</b> both said yes to sharing a room.</p>
+<button className="btn" onClick={()=>setChat(true)}>Start chat</button><br/><br/><button className="btn ghost" onClick={close}>Back to browsing</button></>
+:<><h3>{u.n}</h3><div className="chat">{msgs.map((m,i)=><div key={i} className={"m"+(m.me?" me":"")}>{m.t}</div>)}</div>
+<div className="row"><input value={txt} onChange={e=>setTxt(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()} placeholder="Write a message..."/><button className="btn" onClick={send}>Send</button></div>
+<button className="btn ghost" style={{marginTop:12}} onClick={close}>Back to swiping</button></>}
+</div></div>)}
+
+function App(){
+const [s,go]=useState("home"),[me,setMe]=useState({n:"",a:20,c:"",b:"",g:"",tone:TONES[0],t:[]}),[ans,setAns]=useState([]);
+return s==="home"?<Home go={go}/>:s==="login"?<Login go={go}/>:s==="profile"?<Profile me={me} setMe={setMe} go={go}/>:s==="quiz"?<Quiz setAns={setAns} go={go}/>:<Swipe me={me} ans={ans}/>}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script></body></html>
