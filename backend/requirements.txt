@@ -1,0 +1,13 @@
+
+fastapi
+uvicorn[standard]
+sqlalchemy>=2.0,<3.0
+psycopg[binary]>=3.2
+alembic
+pydantic-settings
+python-dotenv
+email-validator
+PyJWT[crypto]
+pytest
+httpx
+ruff
