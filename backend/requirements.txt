@@ -11,3 +11,4 @@ PyJWT[crypto]
 pytest
 httpx
 ruff
+openpyxl
